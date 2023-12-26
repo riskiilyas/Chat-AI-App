@@ -1,4 +1,7 @@
+import 'dart:io';
+
 class Chat {
   final String msg;
-  const Chat({required this.msg});
+  final File? img;
+  const Chat({required this.msg, this.img});
 }

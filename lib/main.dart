@@ -1,6 +1,7 @@
 import 'package:chat_ai/chat_provider.dart';
 import 'package:chat_ai/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 void main() {

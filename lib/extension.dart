@@ -1,11 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 extension ContextExt on BuildContext {
-  T read<T>() => Provider.of<T>(this);
-
-  T watch<T>() => Provider.of<T>(this, listen: true);
-
   Color get primaryColor => Theme.of(this).primaryColor;
 
   double get width => MediaQuery.of(this).size.width;
@@ -129,4 +128,18 @@ extension WidgetExt on Widget {
         opacity: val,
         child: this,
       );
+}
+
+extension FileExt on File {
+  // Future<Uint8List> convertImageToUint8List() async {
+  //   this.Image? image = img.decodeImage(await this.readAsBytes())
+  //
+  //   if (image != null) {
+  //     // Convert 'image' object to Uint8List
+  //     Uint8List uint8List = img.encodePng(image)!;
+  //     return uint8List;
+  //   }
+  //
+  //   return null;
+  // }
 }
