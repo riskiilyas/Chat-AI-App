@@ -5,7 +5,7 @@ import 'package:chat_ai/extension.dart';
 import 'package:chat_ai/widgets/arrow_down_button.dart';
 import 'package:chat_ai/widgets/me_chat_widget.dart';
 import 'package:chat_ai/widgets/me_chat_with_image_widget.dart';
-import 'package:chat_ai/widgets/pick_image_widget.dart';
+import 'package:chat_ai/widgets/chat_actions_widget.dart';
 import 'package:chat_ai/widgets/response_chat_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -142,21 +142,15 @@ class _ChatPageState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 4,
-                ),
-                4.widthBox,
-                PickImageWidget(
+                8.widthBox,
+                ChatActionsWidget(
                   onPicked: (_) {
                     pickedFile = _;
                   },
                   onRemove: () {
                     pickedFile = null;
                   },
-                ),
-                4.widthBox,
-                InkWell(
-                  onTap: () {
+                  onSend: () {
                     controller.clear();
                     if (pickedFile == null) {
                       notifier.sendMessage(message);
@@ -165,21 +159,6 @@ class _ChatPageState extends State<ChatScreen> {
                       pickedFile = null;
                     }
                   },
-                  child: Material(
-                    elevation: 10,
-                    borderRadius: const BorderRadius.all(Radius.circular(32)),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: context.primaryColor.scaleRGB(.3),
-                            borderRadius: BorderRadius.circular(64)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
-                            Icons.message_outlined,
-                            color: Colors.white,
-                          ),
-                        )),
-                  ),
                 ),
               ],
             ),

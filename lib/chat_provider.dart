@@ -35,19 +35,19 @@ class ChatProvider extends ChangeNotifier {
     chats.add(Chat(msg: message, isRequest: true, img: img));
     isLoading = true;
     notifyListeners();
-    //
-    // final uintList = await img.fileToUint8List();
-    // if (uintList == null) {
-    //   sendMessage(message);
-    // } else {
-    //   gemini.textAndImage(text: message, image: uintList).then((value) {
-    //     chats.add(Chat(msg: value!.output.toString(), isRequest: false));
-    //     _finish();
-    //   }).catchError((e) {
-    //     isError = true;
-    //     print(e);
-    //     _finish();
-    //   });
-    // }
+
+    final uintList = await img.fileToUint8List();
+    if (uintList == null) {
+      sendMessage(message);
+    } else {
+      gemini.textAndImage(text: message, image: uintList).then((value) {
+        chats.add(Chat(msg: value!.output.toString(), isRequest: false));
+        _finish();
+      }).catchError((e) {
+        isError = true;
+        print(e);
+        _finish();
+      });
+    }
   }
 }
