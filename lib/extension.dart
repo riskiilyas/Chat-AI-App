@@ -147,15 +147,15 @@ extension ColorExt on Color {
 }
 
 extension FileExt on File {
-  // Future<Uint8List> convertImageToUint8List() async {
-  //   this.Image? image = img.decodeImage(await this.readAsBytes())
-  //
-  //   if (image != null) {
-  //     // Convert 'image' object to Uint8List
-  //     Uint8List uint8List = img.encodePng(image)!;
-  //     return uint8List;
-  //   }
-  //
-  //   return null;
-  // }
+  Future<Uint8List?> fileToUint8List() async {
+    try {
+      List<int> bytes = await readAsBytes();
+      Uint8List uint8List = Uint8List.fromList(bytes);
+      return uint8List;
+    } catch (e) {
+      print('Error converting file to Uint8List: $e');
+      return null; // Re-throw the exception for error handling in the
+      // calling code
+    }
+  }
 }

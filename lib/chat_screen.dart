@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:chat_ai/chat_provider.dart';
 import 'package:chat_ai/extension.dart';
 import 'package:chat_ai/widgets/arrow_down_button.dart';
 import 'package:chat_ai/widgets/me_chat_widget.dart';
+import 'package:chat_ai/widgets/me_chat_with_image_widget.dart';
+import 'package:chat_ai/widgets/pick_image_widget.dart';
 import 'package:chat_ai/widgets/response_chat_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({Key? key}) : super(key: key);
@@ -17,6 +22,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatPageState extends State<ChatScreen> {
   var message = "";
   TextEditingController controller = TextEditingController();
+  File? pickedFile;
 
   // List<Message> msg = [];
   final _controller = ScrollController();
@@ -39,6 +45,13 @@ class _ChatPageState extends State<ChatScreen> {
   List<Widget> generateChats(ChatProvider provider) {
     final List<Widget> list = provider.chats.map((_) {
       if (_.isRequest) {
+        if (_.img != null) {
+          return MeChatWithImageWidget(
+              img: _.img!,
+              username: 'You',
+              msg: _.msg,
+              time: DateTime.now().toIso8601String().substring(0, 10));
+        }
         return MeChatWidget(
             username: 'You',
             msg: _.msg,
@@ -90,9 +103,8 @@ class _ChatPageState extends State<ChatScreen> {
                   final list = generateChats(provider);
                   return ListView.builder(
                       controller: _controller,
-                      itemCount: notifier.chats.length+1,
-                      itemBuilder: (context, index) => list[index]
-                      );
+                      itemCount: notifier.chats.length + 1,
+                      itemBuilder: (context, index) => list[index]);
                 }),
                 Positioned(
                     bottom: 10,
@@ -134,32 +146,24 @@ class _ChatPageState extends State<ChatScreen> {
                   width: 4,
                 ),
                 4.widthBox,
-                InkWell(
-                  onTap: () {
-                    controller.clear();
-                    notifier.sendMessage(message);
+                PickImageWidget(
+                  onPicked: (_) {
+                    pickedFile = _;
                   },
-                  child: Material(
-                    elevation: 10,
-                    borderRadius: const BorderRadius.all(Radius.circular(32)),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: context.primaryColor.scaleRGB(.3),
-                            borderRadius: BorderRadius.circular(64)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Icon(
-                            Icons.image,
-                            color: Colors.white,
-                          ),
-                        )),
-                  ),
+                  onRemove: () {
+                    pickedFile = null;
+                  },
                 ),
                 4.widthBox,
                 InkWell(
                   onTap: () {
                     controller.clear();
-                    notifier.sendMessage(message);
+                    if (pickedFile == null) {
+                      notifier.sendMessage(message);
+                    } else {
+                      notifier.sendWithImage(message, pickedFile!);
+                      pickedFile = null;
+                    }
                   },
                   child: Material(
                     elevation: 10,

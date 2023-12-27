@@ -34,6 +34,7 @@ dependencies:
   image_picker: ^1.0.5
   flutter_animate: ^4.2.0+1
   flutter_spinkit: ^5.2.0
+  badges: ^3.1.2
 
   flutter:
     sdk: flutter
