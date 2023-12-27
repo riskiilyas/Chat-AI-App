@@ -1,14 +1,13 @@
+import 'package:chat_ai/extension.dart';
 import 'package:flutter/material.dart';
 
 class MeChatWidget extends StatelessWidget {
-  final int avatar;
   final String username;
   final String msg;
   final String time;
 
   const MeChatWidget(
       {Key? key,
-      required this.avatar,
       required this.username,
       required this.msg,
       required this.time})
@@ -30,7 +29,7 @@ class MeChatWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.black26),
+                      color: context.primaryColor.scaleRGB(.15)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -41,6 +40,7 @@ class MeChatWidget extends StatelessWidget {
                             time,
                             style: const TextStyle(color: Colors.white38),
                           ),
+                          12.widthBox,
                           Text(
                             username,
                             style: const TextStyle(
@@ -65,7 +65,7 @@ class MeChatWidget extends StatelessWidget {
                 Positioned(bottom: -8,right: 0,child: CircleAvatar(
                   radius: 12,
                     foregroundImage:
-                    Image.asset("assets/avatars/$avatar.png").image),)
+                    Image.asset("assets/user_chat.png").image),)
               ],
             ),
             const SizedBox(width: double.infinity,)

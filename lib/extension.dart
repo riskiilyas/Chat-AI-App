@@ -128,6 +128,11 @@ extension WidgetExt on Widget {
         opacity: val,
         child: this,
       );
+
+  Padding withPadding(EdgeInsets padding) => Padding(
+        padding: padding,
+        child: this,
+      );
 }
 
 extension ColorExt on Color {

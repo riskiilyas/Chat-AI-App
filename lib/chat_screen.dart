@@ -1,7 +1,10 @@
 import 'package:chat_ai/chat_provider.dart';
 import 'package:chat_ai/extension.dart';
 import 'package:chat_ai/widgets/arrow_down_button.dart';
+import 'package:chat_ai/widgets/me_chat_widget.dart';
+import 'package:chat_ai/widgets/response_chat_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -33,6 +36,31 @@ class _ChatPageState extends State<ChatScreen> {
     }
   }
 
+  List<Widget> generateChats(ChatProvider provider) {
+    final List<Widget> list = provider.chats.map((_) {
+      if (_.isRequest) {
+        return MeChatWidget(
+            username: 'You',
+            msg: _.msg,
+            time: DateTime.now().toIso8601String().substring(0, 10));
+      }
+      return ResponseChatWidget(
+          username: 'Gemini',
+          msg: _.msg,
+          time: DateTime.now().toIso8601String().substring(0, 10));
+    }).toList();
+
+    return [
+      ...list,
+      provider.isLoading
+          ? Center(
+              child: SpinKitWave(
+              color: context.primaryColor.scaleRGB(1),
+            )).withPadding(12.topPadding)
+          : const SizedBox()
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     init();
@@ -44,7 +72,7 @@ class _ChatPageState extends State<ChatScreen> {
           'assets/gemini.png',
           // height: 200,
         ),
-        title: Text(
+        title: const Text(
           "CHAT AI",
           style: TextStyle(color: Colors.white),
         ),
@@ -58,10 +86,14 @@ class _ChatPageState extends State<ChatScreen> {
             Expanded(
                 child: Stack(
               children: [
-                ListView.builder(
-                    controller: _controller,
-                    itemCount: notifier.chats.length,
-                    itemBuilder: (context, index) {}),
+                Consumer<ChatProvider>(builder: (context, provider, widget) {
+                  final list = generateChats(provider);
+                  return ListView.builder(
+                      controller: _controller,
+                      itemCount: notifier.chats.length+1,
+                      itemBuilder: (context, index) => list[index]
+                      );
+                }),
                 Positioned(
                     bottom: 10,
                     right: 0,
@@ -78,7 +110,8 @@ class _ChatPageState extends State<ChatScreen> {
                     style: const TextStyle(color: Colors.white),
                     onChanged: (_) => message = _,
                     decoration: InputDecoration(
-                      hintStyle: TextStyle(color: context.primaryColor.scaleRGB(.7)),
+                      hintStyle:
+                          TextStyle(color: context.primaryColor.scaleRGB(.7)),
                       filled: true,
                       fillColor: context.primaryColor.scaleRGB(.3),
                       focusedBorder: OutlineInputBorder(
