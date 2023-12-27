@@ -130,6 +130,17 @@ extension WidgetExt on Widget {
       );
 }
 
+extension ColorExt on Color {
+  Color scaleRGB(double scale) {
+    final newBlue = (blue * scale).toInt();
+    final newGreen = (green * scale).toInt();
+    final newRed = (red * scale).toInt();
+    return withBlue(newBlue <= 255 ? (newBlue >= 0 ? newBlue : 0) : 255)
+        .withGreen(newGreen <= 255 ? (newGreen >= 0 ? newGreen : 0) : 255)
+        .withRed(newRed <= 255 ? (newRed >= 0 ? newRed : 0) : 255);
+  }
+}
+
 extension FileExt on File {
   // Future<Uint8List> convertImageToUint8List() async {
   //   this.Image? image = img.decodeImage(await this.readAsBytes())

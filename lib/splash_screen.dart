@@ -10,11 +10,13 @@ class SplashScreen extends StatelessWidget {
   Future<void> init(BuildContext context) async {
     await dotenv.load(fileName: ".env");
     Gemini.init(apiKey: dotenv.env['API_TOKEN'].toString());
-    if (!context.mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => ChatScreen()),
-    );
+    Future.delayed(const Duration(seconds: 1), () {
+      if (!context.mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ChatScreen()),
+      );
+    });
   }
 
   @override

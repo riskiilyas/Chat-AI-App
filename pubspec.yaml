@@ -32,6 +32,7 @@ dependencies:
   provider: ^6.0.5
   flutter_dotenv: ^5.1.0
   image_picker: ^1.0.5
+  flutter_animate: ^4.2.0+1
 
   flutter:
     sdk: flutter
