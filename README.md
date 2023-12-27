@@ -1,16 +1,13 @@
-# chat_ai
+# Chat AI
 
-A new Flutter project.
+![image](https://github.com/riskiilyas/Chat-AI-App/assets/71499142/664b56df-8d0b-49f1-9f22-b2f94b03301a)
 
-## Getting Started
+## How to Install
+- Clone this Repository
+- Generate Your own API Token at https://ai.google.dev
+- Open .env file and change the API Token with your own Token
+  
+![image](https://github.com/riskiilyas/Chat-AI-App/assets/71499142/86ca6686-3d23-455e-922d-8f1bab7b88ca)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Full Article
+https://medium.com/@riskiilyas03/level-up-your-flutter-apps-implementing-ai-powered-chat-with-gemini-api-ef6f0aab61ac
